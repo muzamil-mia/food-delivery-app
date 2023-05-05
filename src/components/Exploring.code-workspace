@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../Talk is cheap show me the code"
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+			"activityBar.background": "#3B2A0D",
+			"titleBar.activeBackground": "#533B12",
+			"titleBar.activeForeground": "#FDF9F4"
+		}
+	}
+}
