@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -11,6 +11,8 @@ import Contact from "./components/Contact";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Profile from "./components/ProfileClass";
 import RestaurantMenu from "./components/RestaurantMenu";
+//import Instamart from "./components/Instamart";
+
 
 /* My Food App structure will look like this, 
             1) Header
@@ -31,6 +33,15 @@ import RestaurantMenu from "./components/RestaurantMenu";
 */
 
 //AppLayout component to render: Header, Body and Footer component
+
+//chunking
+//code splitting
+//Dynamic bundling
+//lazy loading
+//on demand loading
+// Dynamic import
+
+const Instamart = lazy(() => import("./components/Instamart"));
 
 const AppLayout = () => {
   return (
@@ -70,6 +81,10 @@ export const appRouter = createBrowserRouter([
         path: "/restaurant/:resId",
         element: <RestaurantMenu />,
       },
+      {
+        path: "/Instamart",
+      element: <Instamart />
+    }
     ]
   },
 ])

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import FoodFireLogo from "../images/Food Fire Logo.png"
 import { Link, useNavigate } from "react-router-dom"  //imported link for client side routing
+import Instamart from "./Instamart";
 
 const Title = () => {
     return (
@@ -37,6 +38,9 @@ const Header = () => {
                     </li>
                     <li>
                         <i class="ri-shopping-cart-line"></i>
+                    </li>
+                    <li>
+                        <Link to="/Instamart">Instamart</Link>
                     </li>
                     <li>
                         {/* use conditional rendering for login and logout */}

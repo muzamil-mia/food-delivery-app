@@ -1,19 +1,12 @@
 
-
+import RestaurantCard from "./RestaurantCrad";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { swiggy_api_URL } from '../constants';
 import { Link } from "react-router-dom";
-import RestaurantCard from "./RestaurantCrad";
+import { filterData } from "../utils/Helper";
+import useOnline from "../utils/useOnline";
 
-//Filter the restaurant data according input type
-function filterData(searchText, restaurants) {
-    const filterData = restaurants.filter((restaurant) =>
-        restaurant?.data?.name.toLowerCase().includes(searchText.toLowerCase())
-    );
-    //console.log(filterData)
-    return filterData
-}
 
 const Body = () => {
 
@@ -22,6 +15,9 @@ const Body = () => {
     const [allRestaurants, setAllRestaurants] = useState([]);
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
+   
+    const isOnline = useOnline();  //custom hook
+   
 
     //useEffect for one time call getRestaurants using empty dependency array
     useEffect(() => {
@@ -46,6 +42,11 @@ const Body = () => {
         }
     }
 
+    // const offline = false;
+
+
+
+
     // us searchData function and set condition if data is empty show error message
     const searchData = (searchText, restaurants) => {
         if (searchText !== "") {
@@ -56,10 +57,21 @@ const Body = () => {
                 setErrorMessage("No matches restaurant found");
             }
         } else {
-            setErrorMessage("");
-            setFilteredRestaurants(restaurants);
+            if (errorMessage) setErrorMessage('');
+            setAllRestaurants(allRestaurants);
         }
     };
+
+   
+   if (!isOnline) {
+    console.log('isOnline is false');
+    return (
+        <div className="isonline">
+            <h1>Offline, please check your internet connection </h1>
+        </div>
+    )
+}
+
 
     // if allRestaurants is empty don't render restaurants cards
     if (!allRestaurants) return null;
@@ -97,6 +109,7 @@ const Body = () => {
                                 to={"/restaurant/" + restaurant.data.id}
                                 key={restaurant.data.id}
                             >
+                                {" "}
                                 <RestaurantCard {...restaurant.data} />
                             </Link>
                         );
@@ -104,7 +117,7 @@ const Body = () => {
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
 export default Body;

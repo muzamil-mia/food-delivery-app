@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import useRestaurant from "../utils/useRestaurant";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 import {
     swiggy_menu_api_URL,
@@ -12,57 +14,64 @@ import { MenuShimmer } from "./Shimmer";
 
 const RestaurantMenu = () => {
     const { resId } = useParams();
-    const [restaurant, setRestaurant] = useState({})
-    const [resMenu, setresMenu] = useState({})
+    //const [restaurant, setRestaurant] = useState({})
+    //const [resMenu, setresMenu] = useState({})
 
-    useEffect(() => {
-        getRestaurantInfo();
-    }, []);
+    const restaurant = useRestaurant(resId)
+      console.log(restaurant)
+    //  console.log(restaurant?.restaurant?.avgRating)
+    //console.log( IMG_CDN_URL + restaurant?.cloudinaryImageId)
+    //console.log(restaurant?.avgRating)
+    const resMenu = useRestaurantMenu(resId)
+    //console.log(resMenu)
+    // useEffect(() => {
+    //     getRestaurantInfo();
+    // }, []);
 
-    async function getRestaurantInfo() {
-        try {
-            const response = await fetch("https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9715987&lng=77.5945627&restaurantId=" + resId + "&submitAction=ENTER");
-            const json = await response.json();
-            //console.log(json)
-            setRestaurant(json?.data?.cards[0]?.card?.card?.info)
-            //console.log(json?.data?.cards[1]?.card?.card)
-            setresMenu(json?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards)
-            //console.log(resMenu)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    // async function getRestaurantInfo() {
+    //     try {
+    //         const response = await fetch("https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9715987&lng=77.5945627&restaurantId=" + resId + "&submitAction=ENTER");
+    //         const json = await response.json();
+    //         //console.log(json)
+    //         setRestaurant(json?.data?.cards[0]?.card?.card?.info)
+    //         //console.log(json?.data?.cards[1]?.card?.card)
+    //         setresMenu(json?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards)
+    //         //console.log(resMenu)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     return !restaurant ? (
         <MenuShimmer />
     ) : (
         <div className="restaurant-menu">
             <div className="restaurant-summary">
-                <img src={IMG_CDN_URL + restaurant?.cloudinaryImageId} alt={restaurant.name} className="restaurant-img" />
+                <img src={IMG_CDN_URL + restaurant?.restaurant?.cloudinaryImageId} alt={restaurant.name} className="restaurant-img" />
                 <div className="restaurant-summary-details">
-                    <h2 className="restaurant-title">{restaurant?.name}</h2>
+                    <h2 className="restaurant-title">{restaurant?.restaurant?.name}</h2>
                     {restaurant && restaurant.cuisines && (
                         <p className="restaurant-tags">
-                            {restaurant.cuisines.join(", ")}
+                            {restaurant?.restaurant?.cuisines.join(", ")}
                         </p>
                     )}
                     <div className="restaurant-details">
                         <div className="restaurant-rating" style={
-                            (restaurant?.avgRating) < 4
+                            (restaurant?.restaurant?.avgRating) < 4
                                 ? { backgroundColor: "var(--light-red)" }
-                                : (restaurant?.avgRating) === "--"
+                                : (restaurant?.restaurant?.avgRating) === "--"
                                     ? { backgroundColor: "white", color: "black" }
                                     : { color: "white" }
                         }>
                             <i class="ri-star-fill"></i>
-                            <span>{restaurant?.avgRating}</span>
+                            <span>{restaurant?.restaurant?.avgRating}</span>
                         </div>
                         <div>|</div>
-                        {restaurant && restaurant.sla && (
-                            <div>{restaurant.sla.slaString}</div>
+                        {restaurant && restaurant?.restaurant?.sla && (
+                            <div>{restaurant?.restaurant?.sla.slaString}</div>
                         )}
                         <div>|</div>
-                        <div>{restaurant?.costForTwoMsg}</div>
+                        <div>{restaurant?.restaurant?.costForTwoMessage}</div>
                     </div>
                 </div>
             </div>
