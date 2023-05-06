@@ -1,5 +1,5 @@
 
-import React, { lazy } from "react";
+import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -11,6 +11,7 @@ import Contact from "./components/Contact";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Profile from "./components/ProfileClass";
 import RestaurantMenu from "./components/RestaurantMenu";
+import Shimmer from "./components/Shimmer";
 //import Instamart from "./components/Instamart";
 
 
@@ -42,6 +43,7 @@ import RestaurantMenu from "./components/RestaurantMenu";
 // Dynamic import
 
 const Instamart = lazy(() => import("./components/Instamart"));
+// Upon on Demand loading -> upon render -> suspend loading to handle this case we use suspense as react will try to render the instamart.js when it has not loaded yet for that we use suspense
 
 const AppLayout = () => {
   return (
@@ -83,7 +85,15 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "/Instamart",
-      element: <Instamart />
+      element: (
+        <Suspense fallback = {
+          <div className="container">
+            loading...
+          </div>
+        }>
+          <Instamart />
+        </Suspense>
+      )
     }
     ]
   },
