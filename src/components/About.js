@@ -1,24 +1,38 @@
-import food from "../images/burger-image.png";
-import { Outlet } from "react-router-dom";
-const About = () => {
-    return (
-        <div className="about-container">
-            <div className="about-left">
-                <h1>
-                    Welcome to <br /> The world of <br /> <span>
-                    Tasty & Fresh Food
-                    </span> 
-                </h1>
-                <h4>
-                    "Better you will feel if you eat a Food <span>Fire</span>Healthy meal"
-                </h4> 
-                <Outlet/>
-            </div>
-            <div className="about-right">
-                <img src={food} alt="food image" />
-            </div>
-        </div>
-    )
-}
 
+
+import ProfileClass from "./ProfileClass";
+import BlogClass from "./BlogClass";
+import { Component } from "react";
+import { Github_User_Name, Github_Blog_Name} from "../constants";
+
+class About extends Component {
+    constructor(props){
+        super(props);
+        console.log("About(parent) - constructor");
+    }
+
+    componentDidUpdate() {
+        console.log("About Component - componentDidUpdate")
+      }
+    
+      componentWillUnmount() {
+        console.log("About Component - componentWillUnmount")
+      }
+
+      render() {
+        console.log("About(parent) - render");
+        return(
+            <div className="container flex justify-around mob:flex-col">
+                <div className="card-container w-[30%] h-2/4 mob:w-auto">
+                    <h1 className="card-container-title">About Me</h1>
+                    <ProfileClass name = {Github_User_Name}/>  { /* Passing props from parent to child */ }
+                </div>
+                <div className="card-container w-[70%] mob:w-auto">
+                    <h1 className="card-container-title">About this project</h1>
+                    <BlogClass name = {Github_Blog_Name}/> { /* Passing props from parent to child */ }
+                </div>
+            </div>
+        )
+      }
+}
 export default About;

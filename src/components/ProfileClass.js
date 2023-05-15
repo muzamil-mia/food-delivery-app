@@ -1,60 +1,54 @@
-import { Component } from "react";
-import ProfileUserClass from "./ProfileUserClass";
-import ProfileRepoClass from "./ProfileRepoClass";
-import { Github_API_User, Github_UserName, options } from "../constants";
+import React from "react";
+import Social from './Social';
+import { Github_API_User } from "../constants";
 
-
-
-//Profileclass is class component
-
-class Profile extends Component {
-    constructor(props){
+class ProfileClass extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
             userInfo: {
-                name : "",
-                bio : "",
-            },
-        };
-
-        console.log("profile-parent constructor")
+                name: "Dummy Name",
+                bio: "Dummy Bio"
+            }
+        }
+        console.log("Profile Component - constructor with props : ", this.props.name, " from parent and state : ", this.state, " from this component");
     }
 
     async componentDidMount() {
-        const response = await fetch(Github_API_User + Github_UserName, options);
-        const json = await response.json();
+        console.log("Profile Component - componentDidMount", this.props.name);
+        const data = await fetch(Github_API_User + this.props.name);
+        const json = await data.json();
+        console.log(json)
         this.setState({
-            userInfo: json,
+            userInfo: json
         })
-         console.log("Profile-Parent componentDidMount");
     }
+
     componentDidUpdate() {
-         console.log("Profile-Parent componentDidUpdate");
-      }
+        console.log("Profile Component - componentDidUpdate")
+    }
 
-      componentWillUnmount() {
-         console.log("Profile-Parent componentWillUnmount");
-      }
+    componentWillUnmount() {
+        console.log("Profile Component - componentWillUnmount")
+    }
 
-      render() {
-        const {userInfo} = this.state;  //object destructuring for json
-        console.log("profile-parent-render")
-        return(
-            <div className="profile-class-container">
-                <div className="profile-container">
-                    <h1 className="profile-title">About Me</h1>
-                    <ProfileUserClass data={userInfo} />
-          {/* Passing props data (full json data) from parent to child */}
+    render() {
+        const { userInfo } = this.state;
+        console.log("profile class component - render");
+        return (
+            <div className="flex flex-col justify-center items-center mt-4 gap-5">
+                <div>
+                    <img className="rounded-full w-[150px] h-[150px] border-none align-middle" src={userInfo.avatar_url} alt={userInfo.name}  />
                 </div>
-                <div className="repo-container">
-          <h1 className="repo-title">Food<span>Fire</span> App Repository</h1>
-          <ProfileRepoClass followers={userInfo.followers} />
-          {/* Passing props followers from parent to child */}
-        </div>
+                <div className="">
+                    <p className="text-base text-bio pt-5 mt-0 mb-4">
+                        {userInfo.bio}
+                    </p>
+                    <Social />
+                </div>
             </div>
         )
-      }
-     
+    }
 }
 
-export default Profile;
+export default ProfileClass;

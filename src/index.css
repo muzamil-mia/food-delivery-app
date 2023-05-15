@@ -1,8 +1,118 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+  @apply mt-24 min-h-screen;
+}
+
+.card-container {
+  @apply px-2.5 py-5 m-4 rounded-md overflow-hidden shadow bg-white;
+}
+.card-container-title {
+  @apply text-3xl leading-4 justify-center text-title text-center font-bold;
+}
+.btn {
+  @apply h-[30px] text-blue-dark rounded-md outline-none border border-yellow text-base;
+}
+
+.btn--primary {
+  @apply bg-yellow ;
+}
+
+.btn--secondary {
+  @apply bg-white;
+}
+
+.nav--btn {
+  @apply w-20 h-8 rounded-md basis-16 bg-white  text-blue-dark outline-none hover:bg-yellow text-base;
+}
+
+.icon--i {
+  @apply text-white rounded-[2.6rem] flex text-[1.4rem] w-[2.6rem] h-[2.6rem] leading-[3rem] text-center select-none mt-0 mr-[5px] mb-2.5;
+}
+
+.shimmer-w60 {
+  @apply w-3/5 mt-2.5 h-[15px] bg-bio;
+}
+
+.shimmer-w40 {
+  @apply w-2/5 mt-2.5 h-[15px] bg-bio;
+}
+
+.shimmer-w20 {
+  @apply w-1/5 mt-1 h-[15px] bg-bio;
+}
+
+.error-text {
+  @apply text-red text-xs;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* NORMAL NATIVE CSS
+SCSS
+INLINE CSS
+COMPONENT LIBRARIES - BOOTSTRAP, MATERIAL-UI, BASE-UI, ANT, CHAKRA
+STYLED COMPONENTS
+TAILWIND CSS FRAMEWORK  --CSS on the go(in the same file) - reusability, -less bundle size, -flexible UI (Custimizations)*/
+
+
 /* Font family */
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap"); */
 
 /*select all css*/
-* {
+/* * {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -14,11 +124,11 @@
 a {
   text-decoration: none;
   color: inherit;
-}
+} */
 
 /* create global variable with :root selector start */
 
-:root {
+/* :root {
   --header-bg-color: rgb(0, 0, 0);
   --footer-bg-color: rgb(1, 163, 144);
   --body-bg-color: #e3e3e3;
@@ -36,10 +146,10 @@ a {
   --light-black: rgb(23, 23, 23);
   --light-blue: #0463ac;
   --dark-blue: #070062;
-}
+} */
 
 /*Header CSS */
-.header {
+/* .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -55,14 +165,14 @@ a {
   left: 0;
   z-index: 999;
   overflow-y: hidden;
-}
+} */
 
-.logo {
+/* .logo {
   padding-left: 10px 0 10px 10px;
   width: 100px;
-}
+} */
 
-.nav-items {
+/* .nav-items {
   padding: 0 10px 0;
   width: auto;
 }
@@ -73,26 +183,26 @@ a {
   margin-right: 30px;
   align-items: center;
   justify-content: space-between;
-}
+} */
 
-.nav-items>ul>li {
+/* .nav-items>ul>li {
   color: #FA7D09;
   padding: 40px 20px 0 0;
   font-size: 18px;
   cursor: pointer;
   margin-right: 25px;
 
-}
+} */
 
 
-.nav-items>ul>li:hover {
+/* .nav-items>ul>li:hover {
   background-color: black;
   border-radius: 5px;
   transition: 1s;
   border: #FA7D09;
-}
+} */
 
-.logout-btn,
+/* .logout-btn,
 .login-btn {
   position: absolute;
   top: 37px;
@@ -107,16 +217,32 @@ a {
   border: 2px solid black;
   border-radius: 5px;
   background-color: #FA7D09;
-}
+} */
 
-button:hover {
+/* button:hover {
   background-color: #281c10;
   transition: 1s;
   border-color: #FA7D09;
+} */
+
+/* .heart-button {
+  position: absolute;
+  z-index: 2;
+  color: #eedddd;
+  font-size: 25px;
+  text-align: right;
+  cursor: pointer;
+  border-radius: 10rem;
+  background-color: transparent;
+  border: transparent;
+  width: 99%;
 }
+.mark-fav-icon{
+  color: #cd1a4a;
+} */
 
 /* body css */
-.search-container {
+/* .search-container {
   margin: 100px auto 20px;
   text-align: center;
   max-width: 100%;
@@ -156,11 +282,11 @@ button:hover {
   background-color: #000000;
   transition: 1s;
   border: 2px solid #FA7D09;
-}
+} */
 
 
 /* Search error message css Start*/
-.error-container {
+/* .error-container {
   text-align: center;
   font-size: large;
   margin: 20px 0;
@@ -173,38 +299,38 @@ button:hover {
   justify-items: center;
   justify-content: center;
   align-self: stretch;
-}
+} */
 
-.card {
+/* .card {
   width: 240px;
   border-radius: 5px;
   box-shadow: -1px 4px 20px 14px rgba(42, 42, 42, 0.2);
   padding: 10px;
   margin: 20px;
   cursor: pointer;
-}
+} */
 
-.card:hover {
+/* .card:hover {
   transform: scale(1.05);
 }
 
 .card>img {
   width: 100%;
   border-radius: 10px;
-}
+} */
 
-.card>h5 {
+/* .card>h5 {
   font-weight: lighter;
-}
+} */
 
-.card>span {
+/* .card>span {
   display: flex;
   justify-content: space-evenly;
   margin-top: 8px;
   text-align: center;
-}
+} */
 
-.card>span>h4 {
+/* .card>span>h4 {
   font-weight: bold;
   font-size: 12px;
   padding: 0 2px 0;
@@ -227,11 +353,11 @@ button:hover {
 .ri-star-fill {
   font-size: 10px;
   padding: 3px 5px 3px 2px;
-}
+} */
 
 
 /* RestaurantMenu css start */
-.restaurant-menu {
+/* .restaurant-menu {
   margin-top: 80px;
   min-height: 80vh;
   width: auto;
@@ -380,12 +506,12 @@ width: 40%;
   border-color: var(--dark-orange);
   margin-top: 10px;
   border-radius: 5px;
-}
+} */
 /* RestaurantMenu End start */
 
 
 /* About us page css start */
-.about-container{
+/* .about-container{
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -427,10 +553,10 @@ width: 40%;
 .about-container .about-right img{
   width: 500px;
   padding-right: 70px;
-}
+} */
 
 /* contact us page css start */
-.contact-container{
+/* .contact-container{
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -488,7 +614,7 @@ width: 50vh;
 
 .contact-container .contact-right form button:hover{
   background-color: var(--dark-green);
-}
+} */
 
 /* contact us page css end */
 
@@ -510,14 +636,14 @@ width: 50vh;
 
 
 /* error page css start */
-.error-page{
+/* .error-page{
   text-align: center;
   background-color: var(--body-bg-color);
   height: 100vh;
   width: auto;
-}
+} */
 /* Footer css */
-.footer {
+/* .footer {
   margin: 10px;
   width: auto;
   text-align: center;
@@ -543,125 +669,6 @@ width: 50vh;
 
 .footer>strong>span {
   color: rgb(203, 54, 0);
-}
+} */
 
 /*shimmer css*/
-.shimmer-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
-  justify-content: center;
-}
-
-.shimmer-card {
-  flex-basis: 250px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-color: #d3d5df;
-  box-shadow: 0 4px 7px 0 rgb(218 220 230 / 60%);
-}
-
-.shimmer-title {
-  width: 60%;
-  margin-top: 10px;
-}
-
-.shimmer-tags {
-  width: 80%;
-  margin-top: 4px;
-}
-
-.shimmer-details {
-  width: 100%;
-  margin-top: 18px;
-}
-
-.shimmer-container .shimmer-img {
-  height: 144px;
-  width: 230px;
-}
-
-/*Animation to Shimmer Component Cards */
-.stroke {
-  height: 15px;
-  background: #777;
-}
-
-.animate {
-  animation: shimmer 3s;
-  animation-iteration-count: infinite;
-  background: linear-gradient(to right, #e6e6e6 5%, #cccccc 25%, #e6e6e6 35%);
-  background-size: 1000px 100%;
-}
-
-@keyframes shimmer {
-  from {
-    background-position: -1000px 0;
-  }
-
-  to {
-    background-position: 1000px 0;
-  }
-}
-
-/* error message css */
-.error-container {
-  text-align: center;
-  font-size: large;
-  margin: 20px 0;
-}
-
-/* CSS for mobile devices */
-@media only screen and (max-width:470px) {
-  .header {
-    height: 60px;
-  }
-
-  .header .logo {
-    width: 80px;
-  }
-
-  .nav-itens>ul>li {
-    font-size: small;
-  }
-
-  .nav-items>ul>li,
-  .logout-btn,
-  .nav-items>ul>li .login-btn {
-    font-size: xx-small;
-  }
-
-  .search-container {
-    margin: 80px auto 0px;
-  }
-}
-
-@media only screen and (max-width: 350px) {
-  .header {
-    height: 50px;
-  }
-
-  .header .logo {
-    width: 70px;
-  }
-
-  .nav-items>ul>li {
-    font-size: x-small;
-  }
-
-  .nav-items>ul>li .logout-btn,
-  .nav-items>ul>li .login-btn {
-    padding: 5px;
-  }
-
-  .search-container {
-    margin: 70px auto 0px;
-  }
-}
-
-.insta{
-  font-size: 50px;
-}
-.isonline{
-  font-size: 50px;
-}

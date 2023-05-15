@@ -1,8 +1,15 @@
+import instamart from "../images/instamart.jpg"
+
+
 const Instamart = () => {
-    return <div className="insta">
-        <h1>Instamart</h1>
-        <h1>100s of components inside it</h1>
+  return (
+    <div className="container">
+      <div className="flex flex-col justify-center items-center gap-10 p-5">
+        <span className="text-blue-dark font-bold text-4xl">Coming Soon...</span>
+        <img src = {instamart} alt="instamart" className="w-[300px]"/>
+      </div>
     </div>
+  )
 }
 
-export default Instamart;
+export default Instamart

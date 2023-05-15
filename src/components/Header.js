@@ -1,57 +1,116 @@
-
-import { useState } from "react";
 import FoodFireLogo from "../images/Food Fire Logo.png"
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom"  //imported link for client side routing
-import Instamart from "./Instamart";
+import useOnline from "../utils/useOnline";
+import UserContext from "../utils/UserContext";
+import { AiOutlineMenu } from "react-icons/ai";
+import Help from "./Help";
 
-const Title = () => {
+const navLinks = [
+    {
+        title: 'Home',
+        path: '/'
+    },
+    {
+        title: 'About',
+        path: '/about'
+    },
+    {
+        title: 'Instamart',
+        path: '/instamart'
+    },
+    {
+        title: 'Help',
+        path: '/help'
+    }
+];
+
+
+export const Title = () => {
     return (
-        <>
-            <a href="/">
-                <img src={FoodFireLogo} alt="Food Fire Logo" title="Food Fire" className="logo" />
-            </a>
-        </>
+        <Link to="/">
+            <img src={FoodFireLogo} alt={"logo"} className="logo ml-2.5 w-[70px]" />
+        </Link>
+
     )
 }
 
-//Header component for header section: logo, nav items
+export const Intro = () => {
+    const { user } = useContext(UserContext);
+    return (
+        <div className="flex justify-center items-center">
+            <span className="py-2.5 px-1 mt-2.5 mr-1 font-bold text-green"> {user.name ? `Hello ${user.name}` : "Please Login"}!!!</span>
+        </div>
+    )
+};
 
-const Header = () => {
 
-    // use useState for user logged in or logged out
-    const [isLoggedin, setIsLoggedin] = useState(true);
+
+export const NavComponent = () => {
+    //  const [user, setUser] = useContext(UserContext);
     const navigate = useNavigate();
+    const isOnline = useOnline();
+
+    // const [isLoggedIn, setIsLoggedIn] = useState(user.authenticated || false);
+    const [menuActive, setMenuActive] = useState(false);
+
+    const closeMenu = () => {
+        const menu = document.querySelector('.menu-content-container');
+        menu.classList.remove('active');
+        menu.classList.add('false');
+        setMenuActive(!menuActive)
+    }
+
+    // console.log("in nav component", user);
+
+
+    // const toggleLogin = () => {
+    //     console.log("isLoggedIn", isLoggedIn);
+    //     setIsLoggedIn(!isLoggedIn);
+    //     if (!user.isAuthenticated) {
+    //         setUser({ isAuthenticated: false })
+    //     } else {
+    //         setUser({ isAuthenticated: false, msg: "You have logged out of the Insta Food App" })
+    //     }
+    //     navigate('/login');
+    // }
 
     return (
-        <div className="header">
-            <Title />
-            <div className="nav-items">
-                <ul>
-                    <li>
-                        <Link to = "/" >Home</Link>
-                    </li>
-                    <li>
-                    <Link to="/about">About</Link>
-                    </li>
-                    <li>
-                    <Link to="/contact">Contact</Link>
-                    </li>
-                    <li>
-                        <i class="ri-shopping-cart-line"></i>
-                    </li>
-                    <li>
-                        <Link to="/Instamart">Instamart</Link>
-                    </li>
-                    <li>
-                        {/* use conditional rendering for login and logout */}
-                        {isLoggedin ? (
-                            <button className="logout-btn" onClick={() => setIsLoggedin(false)}>Logout</button>
-                        ) : (
-                            <button className="login-btn" onClick={() => navigate("/login")}>Login</button>
-                        )}
-                    </li>
+        <div className="flex items-center justify-between">
+            <div className={`menu-content-container flex items-center pr-7  ${menuActive && 'active'}`}>
+                <ul className={`h-full lg:flex xl:flex md:flex items-center pr-5 ${!menuActive && 'hidden'}  ${menuActive && 'flex flex-col flex-start '}`}>
+                    {navLinks.map((link, index) => (
+                        <li key={index} className="p-2.5">
+                            <Link to={link.path}><button className="nav--btn">{link.title}</button></Link>
+                        </li>
+                    ))
+                    }
+
+                    {/* <li className="p-2.5"><button className="nav--btn" onClick={() => {toggleLogin()}}> {isLoggedIn ? "Logout" : "Login" }
+                    <span className={isOnline ? "text-green" : "text-red" }>●</span>
+                    </button></li> */}
                 </ul>
             </div>
+            <AiOutlineMenu className="lg:hidden xl:hidden md:hidden flex w-[65px] text-base text-blue-dark cursor-pointer" onClick={() => {
+                console.log("icon")
+                closeMenu();
+                setMenuActive(!menuActive)
+            }} />
+        </div>
+
+
+    );
+}
+
+
+//Header component for header section: logo, nav items
+
+export const Header = () => {
+    return (
+        <div className="flex justify-between bg-white shadow fixed top-0 left-0 w-full h-[70px] z-50">
+            <Title />
+            <Intro />
+            <NavComponent />
         </div>
     )
 }

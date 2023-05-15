@@ -1,0 +1,16 @@
+import { useState, useEffect }  from 'react';
+
+export const useLocalStorage = (key) => {
+    const [value, setValue] = useState(() => {
+        const value_string = window.localStorage.getItem(key);
+        return JSON.parse(value_string) || [];  //default value is [] if no value is there in the key
+    });
+
+    useEffect(() => {
+        window.localStorage.setItem(key, JSON.stringify(value));
+    },[key, value]);
+
+    return[value, setValue];
+};
+
+export default useLocalStorage;

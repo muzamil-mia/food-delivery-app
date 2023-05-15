@@ -1,69 +1,93 @@
-import React from "react";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
-
-//create a scheme for validation
-const schema = Yup.object().shape({
-    email: Yup.string().required("Email is a required field").email("Invalid email format"),
-    password: Yup.string().required("password is a required field").min(8, "password must be at least 8 characters"),
-})
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Navigate } from "react-router-dom";
+import {useState } from 'react';
+import FoodFireLogo from "../images/Food Fire Logo.png"
+import { useLocation } from 'react-router-dom';
 
 const Login = () => {
-    const navigate = useNavigate();
+  const [user, setUser] = useState({});
+  const {state} = useLocation();
 
-    function handleNaigate(values) {
-        //Alert the input values of the form that we filled
-        alert(values);
-
-        //setTimeout for navigate from login page to home page
-        setTimeout(() => {
-            navigate(-1);
-        }, 0);
+  const loginUser = (values) => {
+    let response = {};
+    //do some authentication and server response
+    if(values.email === "solaiharshitha0@gmail.com") {
+      response = {
+        name : "Harshitha",
+        email : values.email,
+        authenticated : true
+      }
+    } else {
+      response = {
+        authenticated : false
+      }
     }
-    return (
-        <>
-            {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
-            <Formik validationSchema={schema}
-                initialValues={{ email: "", password: "" }}
-                onSubmit={(values) => {
-                    //call handleNavigate and pass input field data
-                    handleNaigate(JSON.stringify(values));
-                }}
-            >
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit
-                }) => (
-                    <div className="login-container">
-                        <div className="login-form">
-                            {/* Passing handleSubmit parameter to html form onSubmit property */}
-                            <form noValidate onSubmit={handleSubmit}>
-                                <span>Login</span>
-                                {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
-                                <input type="email" name="email" onChange={handleChange} onBlur={handleBlur} value={values.email} placeholder="Enter your email" className="form-control inp_text" id="email" />
-                                {/* If validation is not passed show errors */}
-                                <p className="error">
-                                    {errors.email && touched.email && errors.email}
-                                </p>
-                                {/* input with passing formik parameters like handleChange, values, handleBlur to input properties */}
-                                <input type="password" name="password" onChange={handleChange} onBlur={handleBlur} value={values.password} placeholder="Enter your password" className="form-control" />
-                                {/* If validation is not passed show errors */}
-                                <p className="error">
-                                    {errors.password && touched.password && errors.password}
-                                </p>
-                                {/* Click on submit button to submit the form */}
-                                <button type="submit">Login</button>
-                            </form>
-                        </div>
-                    </div>
-                )}
+    
+    return response;
+  }
 
-            </Formik>
-        </>
-    )
-}
+  return (
+  <div className="login-container mt-[100px] min-h-9 text-center flex">
+  
+    <Formik
+      initialValues={{ email: '', password: '' }}
+      validate={values => {
+        const errors = {};
+        if (!values.email) {
+          errors.email = 'Required';
+        } else if (
+          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+        ) {
+          errors.email = 'Invalid email address';
+        }
+        return errors;
+      }}
+      onSubmit={async (values, { setSubmitting }) => {
+        setSubmitting(true);
+        const response = await loginUser(values);
+        console.log("OnSubmit", response);
+        setUser(response);
+        setSubmitting(false);
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form className="border border-gray shadow basis-[500px] h-[400px] m-auto flex items-center justify-center flex-col gap-3 mob:basis-[300px] mob:h-[360px]">
+          <span className="text-blue-dark text-lg font-extrabold mob:text-sm">{state.msg ? state.msg : "Welcome to Insta Food. "} Please Login!</span>
+          <img className="w-[70px] ml-2.5 mob:mx-auto" alt="logo" src= {FoodFireLogo} />
+          {isSubmitting && <div>Loading...</div>}
+          <div className="flex justify-center p-2.5">
+            <label htmlFor="email" className="p-2.5 w-[100px] mob:text-left mob:h-8 mob:text-sm">Email</label>
+            <Field type="email" name="email" id="email" className="outline-none p-1 text-sm h-10 w-[200px] rounded-md bg-gray mob:w-[180px] mob:h-8" 
+            />
+          </div>
+          <ErrorMessage name="email" component="div"  id="pwd" className="error-text"/>
+
+          <div className="pwd flex justify-center p-2.5">
+            <label htmlFor="password" className="pwd-label p-2.5 w-[100px] mob:text-left mob:h-8 mob:text-sm">Password</label>
+            <Field type="password" name="password" id="pwd" className="outline-none p-1 text-sm h-10 w-[200px] rounded-md bg-gray mob:w-[180px] mob:h-8" />
+          </div>
+          <ErrorMessage name="password" component="div" className="error-text"/>
+
+          <div className='submit'>
+            <button className="btn btn--primary w-[80px]" type="submit" disabled={isSubmitting}>
+              Submit
+            </button>
+          </div>
+
+            
+
+        </Form>
+      )
+      
+    }
+    </Formik>
+    { user.authenticated  && <Navigate to="/" state={user} replace={true} />}
+  </div>
+
+
+  )}
+
+
+
+export default Login;
