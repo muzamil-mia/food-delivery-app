@@ -17,7 +17,7 @@ const Body = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const isOnline = useOnline();  //custom hook
     const [isFavourite, setIsFavourite] = useState(false);
-    const [favRestaurants, setFavRestaurants] = useLocalStorage()
+    const [favRestaurants, setFavRestaurants] = useLocalStorage("fav")  //custom hook
 
 
     //useEffect for one time call getRestaurants using empty dependency array
@@ -26,7 +26,7 @@ const Body = () => {
     }, [])
 
     //async function get Restaurant to fetch Swiggy Api data
-    async function getRestaurants() {
+    const  getRestaurants = async () => {
         //handle the error using try... catch
         try {
             const data = await fetch(swiggy_api_URL);
@@ -70,11 +70,11 @@ const Body = () => {
 
 
     const addFavourite = (props) => {
-        // console.log(props)
-        // console.log(props?.id)
+        //  console.log(props)
+        //  console.log(props?.id)
 
         //if restaurant is not marked fav, then add to local storage
-        if (!favRestaurants.find((restaurant) => restaurant?.data?.id === props.id)) {
+        if (!favRestaurants.find(restaurant => restaurant?.data?.id === props.id)) {
 
             setFavRestaurants([...favRestaurants, props]);
         } else {
@@ -85,6 +85,7 @@ const Body = () => {
     }
 
     const showFavouriteRestaurants = () => {
+        console.log(favRestaurants)
         if (isFavourite) {
             if (errorMessage) setErrorMessage('');
             setFilteredRestaurants(allRestaurants);

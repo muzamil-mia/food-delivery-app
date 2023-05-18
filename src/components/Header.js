@@ -5,6 +5,7 @@ import useOnline from "../utils/useOnline";
 import UserContext from "../utils/UserContext";
 import { AiOutlineMenu } from "react-icons/ai";
 import Help from "./Help";
+import { useSelector } from 'react-redux';
 
 const navLinks = [
     {
@@ -47,11 +48,12 @@ export const Intro = () => {
 
 
 export const NavComponent = () => {
-    //  const [user, setUser] = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const isOnline = useOnline();
-
-    // const [isLoggedIn, setIsLoggedIn] = useState(user.authenticated || false);
+const totalItemsCount = useSelector((store) => store.cart.totalItemsCount);
+console.log("Header:", totalItemsCount);
+    const [isLoggedIn, setIsLoggedIn] = useState(user.isAuthenticated || false);
     const [menuActive, setMenuActive] = useState(false);
 
     const closeMenu = () => {
@@ -61,19 +63,19 @@ export const NavComponent = () => {
         setMenuActive(!menuActive)
     }
 
-    // console.log("in nav component", user);
+    console.log("in nav component", user);
 
 
-    // const toggleLogin = () => {
-    //     console.log("isLoggedIn", isLoggedIn);
-    //     setIsLoggedIn(!isLoggedIn);
-    //     if (!user.isAuthenticated) {
-    //         setUser({ isAuthenticated: false })
-    //     } else {
-    //         setUser({ isAuthenticated: false, msg: "You have logged out of the Insta Food App" })
-    //     }
-    //     navigate('/login');
-    // }
+    const toggleLogin = () => {
+        console.log("isLoggedIn", isLoggedIn);
+        setIsLoggedIn(!isLoggedIn);
+        if (!user.isAuthenticated) {
+            setUser({ isAuthenticated: false })
+        } else {
+            setUser({ isAuthenticated: false, msg: "You have logged out of the Insta Food App" })
+        }
+        navigate('/login');
+    }
 
     return (
         <div className="flex items-center justify-between">
@@ -83,12 +85,22 @@ export const NavComponent = () => {
                         <li key={index} className="p-2.5">
                             <Link to={link.path}><button className="nav--btn">{link.title}</button></Link>
                         </li>
-                    ))
-                    }
+                    ))}
+                    <li className="p-2 5">
+                        <Link to="/cart">
+                            {" "}
+                            <button className="nav--btn">
+                                Cart{" "}
+                                <span className="text-orange font-bold pl-1">
+                                    {/* {totalItemsCount} */}
+                                </span>{" "}
+                            </button>{" "}
+                        </Link>
+                    </li>
 
-                    {/* <li className="p-2.5"><button className="nav--btn" onClick={() => {toggleLogin()}}> {isLoggedIn ? "Logout" : "Login" }
-                    <span className={isOnline ? "text-green" : "text-red" }>●</span>
-                    </button></li> */}
+                    <li className="p-2.5"><button className="nav--btn" onClick={() => { toggleLogin() }}> {isLoggedIn ? "Logout" : "Login"}
+                        <span className={isOnline ? "text-green" : "text-red"}>●</span>
+                    </button></li>
                 </ul>
             </div>
             <AiOutlineMenu className="lg:hidden xl:hidden md:hidden flex w-[65px] text-base text-blue-dark cursor-pointer" onClick={() => {
