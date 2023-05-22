@@ -13,7 +13,7 @@ const CartFallback =({text, btnText}) => {
                 </NavLink>
             )}
         </div>
-    )
-}
+    );
+};
 
 export default CartFallback;

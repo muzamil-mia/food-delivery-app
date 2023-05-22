@@ -24,7 +24,7 @@ import RestaurantMenu from "./components/RestaurantMenu";
 import Shimmer from "./components/Shimmer";
 import { useLocation } from "react-router-dom";
 import Login from "./components/Login";
-
+import Cart from "./components/Cart";
 
 
 
@@ -39,7 +39,7 @@ const Help = lazy(() => import("./components/Help"))
 const App = () => {
   return (
     <Provider store={store}>
-        <Outlet />
+      <Outlet />
     </Provider>
   )
 }
@@ -89,6 +89,10 @@ export const appRouter = createBrowserRouter([
             element: <Contact />
           },
           {
+            path: '/cart',
+            element: <Cart />
+          },
+          {
             path: "/",
             element: <Body />
           },
@@ -103,7 +107,7 @@ export const appRouter = createBrowserRouter([
           {
             path: "/help",
             element: (<Suspense fallback={<div className="container"><h1>Loading...</h1></div>}> <Help /></Suspense>)
-          }
+          },
         ]
       },
       ,

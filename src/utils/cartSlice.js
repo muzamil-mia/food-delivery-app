@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
-        items: {},
+        items: [],
         totalItemsCount: 0,
         deliveryAddress: {},
         paymentMethod: {},
@@ -11,20 +11,25 @@ const cartSlice = createSlice({
 
     //to modify our cartSlice we will create reducer function
     reducers: {
-        //reducer function will be called on dispatch of action here addItem is an action and corresponding value to addItem key is reducer function which will be called on dispatch of addItem action. 
-        addItem: (state, action) => {
-            //state.items.push(action.payload);
 
-            const item = state.items[action.payload.id]
-            const quantity = item && item.hasOwnProperty("quantity") ? state.items[action.payload.id]?.quantity + 1 : 1;
-            state.items[action.payload.id] = { ...action.payload, quantity };
-            state.totalItemsCount = state.totalItemsCount + 1;
-        },
+        addItem: (state, action) => {
+            // console.log(action.payload)
+             const item = state.items[action.payload.id];
+             //console.log(item)
+             const quantity =
+               item && item.hasOwnProperty("quantity")
+                 ? state.items[action.payload.id]?.quantity + 1
+                 : 1;
+             state.items[action.payload.id] = { ...action.payload, quantity };
+             state.totalItemsCount = state.totalItemsCount + 1;
+           },
 
         removeItem: (state, action) => {
-            //state.items.pop();
+
             const item = state.items[action.payload];
+
             if (!item) return;
+
             if (item.quantity > 1) {
                 item.quantity -= 1;
                 state.totalItemsCount--;
@@ -32,6 +37,7 @@ const cartSlice = createSlice({
                 state.totalItemsCount--;
                 delete state.items[action.payload];
             }
+            state.totalItemsCount--;
         },
         clearCart: (state) => {
             state.items = [];

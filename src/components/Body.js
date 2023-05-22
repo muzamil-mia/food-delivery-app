@@ -1,5 +1,5 @@
 
-import RestaurantCard from "./RestaurantCrad";
+import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { swiggy_api_URL } from '../constants';
@@ -26,7 +26,7 @@ const Body = () => {
     }, [])
 
     //async function get Restaurant to fetch Swiggy Api data
-    const  getRestaurants = async () => {
+    const getRestaurants = async () => {
         //handle the error using try... catch
         try {
             const data = await fetch(swiggy_api_URL);
@@ -127,31 +127,31 @@ const Body = () => {
                         </button>
                     </div>
                     <div className="flex justify-end h-[100px] items-center m-auto mob:h-[50px]">
-                        <button className={isFavourite ? "btn btn--primary px-[5px] mob:basis-[50px] mob:text-xs" : "btn btn--secondary px-[5px] mob:basis-[50px] mob:text-xs"} onClick={() => {showFavouriteRestaurants()}}>Favourites</button>
-</div>
+                        <button className={isFavourite ? "btn btn--primary px-[5px] mob:basis-[50px] mob:text-xs" : "btn btn--secondary px-[5px] mob:basis-[50px] mob:text-xs"} onClick={() => { showFavouriteRestaurants() }}>Favourites</button>
                     </div>
+                </div>
 
-                    {errorMessage && <div className="h-14 m-auto text-center" id="error"><span className="error-msg" id="error-msg">{errorMessage}</span></div>}
+                {errorMessage && <div className="h-14 m-auto text-center" id="error"><span className="error-txt w-14 h-8" id="error-msg">{errorMessage}</span></div>}
 
-                    {/* if restaurants data is not fetched then display Shimmer UI after the fetched data display restaurants cards */}
-                    {allRestaurants?.length === 0 ? (<Shimmer />) : (
-                        <div  className="flex flex-wrap gap-5 justify-center">
-                            {/* We are mapping restaurants array and passing JSON array data to RestaurantCard component as props with unique key as restaurant.data.id */}
-                            {filteredRestaurants.map((restaurant) => {
-                                if (!restaurant || !restaurant.data || !restaurant.data.id) {
-                                    // Handle the case when the restaurant or its properties are undefined
-                                    return null;
-                                }
-                                {/* console.log(restaurant.data) */ }
-                                return (<Link
-                                   className="basis-[250px] p-2.5 mb-2.5 mob:basis-[150px]" to={"/restaurant/" + restaurant.data.id} key={restaurant.data.id}>
-                                    <RestaurantCard {...restaurant.data} key={restaurant.data.id} setRestaurants={addFavourite} />
-                                </Link>
-                                )
-                            })}
-                        </div>
-                    )}
+                {/* if restaurants data is not fetched then display Shimmer UI after the fetched data display restaurants cards */}
+                {allRestaurants?.length === 0 ? (<Shimmer />) : (
+                    <div className="flex flex-wrap gap-5 justify-center">
+                        {/* We are mapping restaurants array and passing JSON array data to RestaurantCard component as props with unique key as restaurant.data.id */}
+                        {filteredRestaurants.map((restaurant) => {
+                            if (!restaurant || !restaurant.data || !restaurant.data.id) {
+                                // Handle the case when the restaurant or its properties are undefined
+                                return null;
+                            }else
+                            {/* console.log(restaurant.data) */ }
+                            return (<Link
+                                className="basis-[250px] p-2.5 mb-2.5 mob:basis-[150px]" to={"/restaurant/" + restaurant.data.id} key={restaurant.data.id}>
+                                <RestaurantCard {...restaurant.data} key={restaurant.data.id} setRestaurants={addFavourite} />
+                            </Link>
+                            )
+                        })}
                     </div>
+                )}
+            </div>
         </>
     );
 };

@@ -6,6 +6,7 @@ import UserContext from "../utils/UserContext";
 import { AiOutlineMenu } from "react-icons/ai";
 import Help from "./Help";
 import { useSelector } from 'react-redux';
+import Cart from "./Cart";
 
 const navLinks = [
     {
@@ -51,8 +52,12 @@ export const NavComponent = () => {
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const isOnline = useOnline();
+
+    //subscribe to the store using useSelector hook
 const totalItemsCount = useSelector((store) => store.cart.totalItemsCount);
-console.log("Header:", totalItemsCount);
+//console.log("Header:", totalItemsCount);
+
+
     const [isLoggedIn, setIsLoggedIn] = useState(user.isAuthenticated || false);
     const [menuActive, setMenuActive] = useState(false);
 
@@ -63,7 +68,7 @@ console.log("Header:", totalItemsCount);
         setMenuActive(!menuActive)
     }
 
-    console.log("in nav component", user);
+    //console.log("in nav component", user);
 
 
     const toggleLogin = () => {
@@ -90,9 +95,10 @@ console.log("Header:", totalItemsCount);
                         <Link to="/cart">
                             {" "}
                             <button className="nav--btn">
+                            {" "}
                                 Cart{" "}
                                 <span className="text-orange font-bold pl-1">
-                                    {/* {totalItemsCount} */}
+                                    {totalItemsCount}
                                 </span>{" "}
                             </button>{" "}
                         </Link>
